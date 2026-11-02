@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
-
-import 'data/contact_group.dart';
-
-final contactGroupsModel = ContactGroupsModel();
+import 'package:rolodex/screens/groups_screen.dart';
 
 void main() {
   runApp(const RolodexApp());
@@ -21,7 +18,7 @@ class RolodexApp extends StatelessWidget {
           darkColor: Color(0xFF1D1D1D),
         ),
       ),
-      home: CupertinoPageScaffold(child: Center(child: Text('Hello Rolodex!'))),
+      home: GroupsScreen(),
     );
   }
 }
