@@ -7,6 +7,9 @@ class Contact {
     this.suffix,
   });
 
+  String get fullName =>
+      [firstName, middleName, lastName, suffix].whereType<String>().join(' ');
+
   final int id;
   final String firstName;
   final String lastName;

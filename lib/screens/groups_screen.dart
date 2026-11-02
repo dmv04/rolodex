@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:rolodex/data/contact_group.dart';
 import 'package:rolodex/data/app_state.dart';
 import 'package:rolodex/widgets/group_tile.dart';
+import 'package:rolodex/screens/contacts_screen.dart';
 
 class GroupsScreen extends StatelessWidget {
   const GroupsScreen({super.key});
@@ -19,14 +20,24 @@ class GroupsScreen extends StatelessWidget {
                 CupertinoListSection.insetGrouped(
                   children: groups
                       .where((g) => g.permanent)
-                      .map((g) => GroupTile(group: g, onTap: () {}))
+                      .map(
+                        (g) => GroupTile(
+                          group: g,
+                          onTap: () => _openGroup(context, g),
+                        ),
+                      )
                       .toList(),
                 ),
                 CupertinoListSection.insetGrouped(
                   header: const Text('My Lists'),
                   children: groups
                       .where((g) => !g.permanent)
-                      .map((g) => GroupTile(group: g, onTap: () {}))
+                      .map(
+                        (g) => GroupTile(
+                          group: g,
+                          onTap: () => _openGroup(context, g),
+                        ),
+                      )
                       .toList(),
                 ),
               ],
@@ -36,4 +47,10 @@ class GroupsScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+void _openGroup(BuildContext context, ContactGroup group) {
+  Navigator.of(
+    context,
+  ).push(CupertinoPageRoute(builder: (_) => ContactsScreen(groupId: group.id)));
 }
