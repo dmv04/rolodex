@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:rolodex/data/contact_group.dart';
 import 'package:rolodex/data/app_state.dart';
 import 'package:rolodex/widgets/contact_tile.dart';
+import 'package:rolodex/screens/contact_detail_screen.dart';
 
 class ContactsScreen extends StatelessWidget {
   const ContactsScreen({super.key, required this.groupId});
@@ -32,8 +33,14 @@ class ContactsScreen extends StatelessWidget {
                             for (final contact in entry.value)
                               ContactTile(
                                 contact: contact,
-                                onTap: () =>
-                                    debugPrint('Tapped ${contact.fullName}'),
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    CupertinoPageRoute(
+                                      builder: (_) =>
+                                          ContactDetailScreen(contact: contact),
+                                    ),
+                                  );
+                                },
                               ),
                           ],
                         ),

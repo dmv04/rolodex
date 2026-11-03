@@ -10,6 +10,8 @@ class Contact {
   String get fullName =>
       [firstName, middleName, lastName, suffix].whereType<String>().join(' ');
 
+  String get initials => '${firstName[0]}${lastName[0]}'.toUpperCase();
+
   final int id;
   final String firstName;
   final String lastName;

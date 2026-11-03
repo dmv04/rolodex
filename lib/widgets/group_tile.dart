@@ -14,7 +14,7 @@ class GroupTile extends StatelessWidget {
       leading: const Icon(CupertinoIcons.person_2),
       additionalInfo: Text('${group.contacts.length}'),
       trailing: const CupertinoListTileChevron(),
-      onTap: () {},
+      onTap: onTap,
     );
   }
 }

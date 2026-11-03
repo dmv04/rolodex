@@ -50,7 +50,10 @@ class GroupsScreen extends StatelessWidget {
 }
 
 void _openGroup(BuildContext context, ContactGroup group) {
-  Navigator.of(
-    context,
-  ).push(CupertinoPageRoute(builder: (_) => ContactsScreen(groupId: group.id)));
+  Navigator.of(context).push(
+    CupertinoPageRoute(
+      title: group.title,
+      builder: (_) => ContactsScreen(groupId: group.id),
+    ),
+  );
 }
