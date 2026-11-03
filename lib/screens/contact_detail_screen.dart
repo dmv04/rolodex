@@ -9,21 +9,11 @@ class ContactDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      // Убрали middle: Text(contact.fullName), оставили базовый навбар
       navigationBar: const CupertinoNavigationBar(),
       child: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(vertical: 24),
-          children: [
-            // 2. Шапка (место для Column)
-            _buildHeader(),
-
-            // 3. Ряд кнопок (место для Row)
-            _buildActionRow(),
-
-            // 4. Секция полей (место для CupertinoListSection)
-            _buildFieldsSection(),
-          ],
+          children: [_buildHeader(), _buildActionRow(), _buildFieldsSection()],
         ),
       ),
     );
@@ -36,12 +26,12 @@ class ContactDetailScreen extends StatelessWidget {
           width: 80,
           height: 80,
           decoration: const BoxDecoration(
-            color: CupertinoColors.systemGroupedBackground,
+            color: CupertinoColors.systemGrey4,
             shape: BoxShape.circle,
           ),
           child: Center(
             child: Text(
-              contact.initials, // Ваш геттер инициалов
+              contact.initials,
               style: const TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
@@ -99,7 +89,6 @@ class ContactDetailScreen extends StatelessWidget {
           title: const Text('Имя'),
           additionalInfo: Text(contact.firstName),
         ),
-        // Проверка на наличие отчества
         if (contact.middleName != null && contact.middleName!.isNotEmpty)
           CupertinoListTile(
             title: const Text('Отчество'),
@@ -109,11 +98,20 @@ class ContactDetailScreen extends StatelessWidget {
           title: const Text('Фамилия'),
           additionalInfo: Text(contact.lastName),
         ),
-        // Проверка на наличие суффикса
         if (contact.suffix != null && contact.suffix!.isNotEmpty)
           CupertinoListTile(
             title: const Text('Суффикс'),
             additionalInfo: Text(contact.suffix!),
+          ),
+        if (contact.phone != null)
+          CupertinoListTile(
+            title: const Text('Телефон'),
+            additionalInfo: Text(contact.phone!),
+          ),
+        if (contact.email != null)
+          CupertinoListTile(
+            title: const Text('Email'),
+            additionalInfo: Text(contact.email!),
           ),
       ],
     );

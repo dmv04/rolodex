@@ -10,7 +10,7 @@ class GroupsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(middle: Text('Lists')),
+      navigationBar: const CupertinoNavigationBar(middle: Text('Списки')),
       child: SafeArea(
         child: ValueListenableBuilder<List<ContactGroup>>(
           valueListenable: contactGroupsModel.listsNotifier,
@@ -29,7 +29,7 @@ class GroupsScreen extends StatelessWidget {
                       .toList(),
                 ),
                 CupertinoListSection.insetGrouped(
-                  header: const Text('My Lists'),
+                  header: const Text('Мои списки'),
                   children: groups
                       .where((g) => !g.permanent)
                       .map(

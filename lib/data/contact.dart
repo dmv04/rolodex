@@ -5,6 +5,8 @@ class Contact {
     this.middleName,
     required this.lastName,
     this.suffix,
+    this.phone,
+    this.email,
   });
 
   String get fullName =>
@@ -17,6 +19,8 @@ class Contact {
   final String lastName;
   final String? middleName;
   final String? suffix;
+  final String? phone;
+  final String? email;
 }
 
 final johnAppleseed = Contact(id: 0, firstName: 'John', lastName: 'Appleseed');
