@@ -23,6 +23,10 @@
 |---|---|
 | ![Карточка контакта](docs/screenshots/Screenshot_3.png) | ![Новый контакт](docs/screenshots/Screenshot_4.png) |
 
+Ошибки валидации (пустые имя и фамилия, телефон `abc`, email `test@`):
+
+![Ошибки валидации](docs/screenshots/Screenshot_5.png)
+
 ## Навигация
 
 ```
