@@ -58,7 +58,6 @@ void main() {
     expect(find.text('Только цифры, пробелы, + - ( )'), findsOneWidget);
   });
 
-
   testWidgets('корректная форма возвращает контакт', (tester) async {
     Contact? result;
 
