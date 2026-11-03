@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 
@@ -56,9 +57,6 @@ class ContactGroup {
 
 typedef AlphabetizedContactMap = SplayTreeMap<String, List<Contact>>;
 
-/// Sorts a list of [contacts] alphabetically by
-/// last name, then first name, then middle name.
-/// If names are identical, sorts by contact ID to ensure consistent ordering.
 void _sortContacts(List<Contact> contacts) {
   contacts.sort((a, b) {
     final checkLastName = a.lastName.compareTo(b.lastName);
@@ -78,7 +76,6 @@ void _sortContacts(List<Contact> contacts) {
       return a.middleName != null ? 1 : -1;
     }
 
-    // If both contacts have the exact same name, order by first created.
     return a.id.compareTo(b.id);
   });
 }
@@ -86,18 +83,18 @@ void _sortContacts(List<Contact> contacts) {
 final allPhone = ContactGroup(
   id: 0,
   permanent: true,
-  label: 'All iPhone',
-  title: 'iPhone',
+  label: 'Все контакты',
+  title: 'Контакты',
   contacts: allContacts.toList(),
 );
 
 final friends = ContactGroup(
   id: 1,
-  label: 'Friends',
+  label: 'Друзья',
   contacts: [allContacts.elementAt(3)],
 );
 
-final work = ContactGroup(id: 2, label: 'Work');
+final work = ContactGroup(id: 2, label: 'Работа');
 
 List<ContactGroup> generateSeedData() {
   return [allPhone, friends, work];
@@ -118,5 +115,28 @@ class ContactGroupsModel {
 
   void dispose() {
     _listsNotifier.dispose();
+  }
+
+  int nextContactId() {
+    final allContactsList = lists.first.contacts;
+    if (allContactsList.isEmpty) return 0;
+    return allContactsList.map((c) => c.id).reduce(max) + 1;
+  }
+
+  void addContact(Contact contact, {required int groupId}) {
+    final updated = [
+      for (final group in lists)
+        if (group.id == 0 || group.id == groupId)
+          ContactGroup(
+            id: group.id,
+            label: group.label,
+            title: group.title,
+            permanent: group.permanent,
+            contacts: [...group.contacts, contact],
+          )
+        else
+          group,
+    ];
+    _listsNotifier.value = updated;
   }
 }
