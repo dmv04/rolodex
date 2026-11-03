@@ -13,6 +13,16 @@
 | Карточка контакта | `lib/screens/contact_detail_screen.dart` | аватар с инициалами, ряд кнопок действий, поля контакта |
 | Новый контакт | `lib/screens/contact_form_screen.dart` | форма с валидацией |
 
+## Скриншоты
+
+| Списки | Контакты группы |
+|---|---|
+| ![Списки](docs/screenshots/Screenshot_1.png) | ![Контакты группы](docs/screenshots/Screenshot_2.png) |
+
+| Карточка контакта | Новый контакт |
+|---|---|
+| ![Карточка контакта](docs/screenshots/Screenshot_3.png) | ![Новый контакт](docs/screenshots/Screenshot_4.png) |
+
 ## Навигация
 
 ```
