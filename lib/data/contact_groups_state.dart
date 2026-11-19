@@ -14,9 +14,16 @@ final class ContactGroupsLoading extends ContactGroupsState {
 final class ContactGroupsLoaded extends ContactGroupsState {
   const ContactGroupsLoaded(this.groups);
   final List<ContactGroup> groups;
+
+  @override
+  List<Object?> get props => [groups];
 }
 
 final class ContactGroupsError extends ContactGroupsState {
   const ContactGroupsError(this.message);
+
   final String message;
+
+  @override
+  List<Object?> get props => [message];
 }
