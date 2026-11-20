@@ -1,10 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rolodex/data/fake_contacts_repository.dart';
 import 'package:rolodex/main.dart';
 
 void main() {
   testWidgets('добавление контакта в «Друзья»', (tester) async {
-    await tester.pumpWidget(const RolodexApp());
+    await tester.pumpWidget(
+      RolodexApp(
+        repository: FakeContactsRepository(
+          delay: Duration.zero,
+          shouldFail: () => false,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
 
     await tester.tap(find.text('Друзья'));
     await tester.pumpAndSettle();

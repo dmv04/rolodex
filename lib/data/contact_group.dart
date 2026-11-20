@@ -1,7 +1,4 @@
 import 'dart:collection';
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 
 import 'contact.dart';
 
@@ -98,45 +95,4 @@ final work = ContactGroup(id: 2, label: 'Работа');
 
 List<ContactGroup> generateSeedData() {
   return [allPhone, friends, work];
-}
-
-class ContactGroupsModel {
-  ContactGroupsModel() : _listsNotifier = ValueNotifier(generateSeedData());
-
-  final ValueNotifier<List<ContactGroup>> _listsNotifier;
-
-  ValueNotifier<List<ContactGroup>> get listsNotifier => _listsNotifier;
-
-  List<ContactGroup> get lists => _listsNotifier.value;
-
-  ContactGroup findContactList(int id) {
-    return lists[id];
-  }
-
-  void dispose() {
-    _listsNotifier.dispose();
-  }
-
-  int nextContactId() {
-    final allContactsList = lists.first.contacts;
-    if (allContactsList.isEmpty) return 0;
-    return allContactsList.map((c) => c.id).reduce(max) + 1;
-  }
-
-  void addContact(Contact contact, {required int groupId}) {
-    final updated = [
-      for (final group in lists)
-        if (group.id == 0 || group.id == groupId)
-          ContactGroup(
-            id: group.id,
-            label: group.label,
-            title: group.title,
-            permanent: group.permanent,
-            contacts: [...group.contacts, contact],
-          )
-        else
-          group,
-    ];
-    _listsNotifier.value = updated;
-  }
 }
