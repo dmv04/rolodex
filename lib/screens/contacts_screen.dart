@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:rolodex/data/contact_group.dart';
-import 'package:rolodex/data/app_state.dart';
-import 'package:rolodex/widgets/contact_tile.dart';
-import 'package:rolodex/screens/contact_detail_screen.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rolodex/data/contact.dart';
+import 'package:rolodex/data/contact_group.dart';
+import 'package:rolodex/data/contact_groups_cubit.dart';
+import 'package:rolodex/data/contact_groups_state.dart';
+import 'package:rolodex/screens/contact_detail_screen.dart';
 import 'package:rolodex/screens/contact_form_screen.dart';
+import 'package:rolodex/widgets/contact_tile.dart';
 
 class ContactsScreen extends StatelessWidget {
   const ContactsScreen({super.key, required this.groupId});
@@ -14,10 +15,20 @@ class ContactsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<List<ContactGroup>>(
-      valueListenable: contactGroupsModel.listsNotifier,
-      builder: (context, _, _) {
-        final group = contactGroupsModel.findContactList(groupId);
+    return BlocBuilder<ContactGroupsCubit, ContactGroupsState>(
+      builder: (context, state) {
+        final ContactGroup? group = switch (state) {
+          ContactGroupsLoaded(:final groups) => groups.firstWhere(
+            (g) => g.id == groupId,
+          ),
+          ContactGroupsLoading() || ContactGroupsError() => null,
+        };
+
+        if (group == null) {
+          return const CupertinoPageScaffold(
+            child: Center(child: CupertinoActivityIndicator()),
+          );
+        }
 
         return CupertinoPageScaffold(
           navigationBar: CupertinoNavigationBar(
@@ -67,8 +78,7 @@ class ContactsScreen extends StatelessWidget {
       ),
     );
 
-    if (contact != null) {
-      contactGroupsModel.addContact(contact, groupId: groupId);
-    }
+    if (contact == null || !context.mounted) return;
+    context.read<ContactGroupsCubit>().addContact(contact, groupId: groupId);
   }
 }

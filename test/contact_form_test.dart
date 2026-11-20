@@ -1,13 +1,23 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:rolodex/data/contact_groups_cubit.dart';
+import 'package:rolodex/data/fake_contacts_repository.dart';
 import 'package:rolodex/screens/contact_form_screen.dart';
 import 'package:rolodex/data/contact.dart';
 
 void main() {
+  Widget app({required Widget home}) => BlocProvider(
+    create: (_) => ContactGroupsCubit(
+      FakeContactsRepository(delay: Duration.zero, shouldFail: () => false),
+    ),
+    child: CupertinoApp(home: home),
+  );
+
   final fields = find.byType(CupertinoTextFormFieldRow);
 
   Future<void> openForm(WidgetTester tester) async {
-    await tester.pumpWidget(const CupertinoApp(home: ContactFormScreen()));
+    await tester.pumpWidget(app(home: const ContactFormScreen()));
   }
 
   testWidgets('пустая форма: ошибки под именем и фамилией', (tester) async {
@@ -30,9 +40,8 @@ void main() {
   });
 
   testWidgets('неверный телефон: ошибка', (tester) async {
-    // 1. Сначала монтируем виджет и открываем форму
     await tester.pumpWidget(
-      CupertinoApp(
+      app(
         home: Builder(
           builder: (context) => CupertinoButton(
             child: const Text('open'),
@@ -62,7 +71,7 @@ void main() {
     Contact? result;
 
     await tester.pumpWidget(
-      CupertinoApp(
+      app(
         home: Builder(
           builder: (context) => CupertinoButton(
             child: const Text('open'),
@@ -98,7 +107,7 @@ void main() {
     Contact? result;
 
     await tester.pumpWidget(
-      CupertinoApp(
+      app(
         home: Builder(
           builder: (context) => CupertinoButton(
             child: const Text('open'),

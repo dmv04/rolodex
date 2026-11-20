@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:rolodex/data/app_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rolodex/data/contact.dart';
+import 'package:rolodex/data/contact_groups_cubit.dart';
 import 'package:rolodex/utils/validators.dart';
-
-import '../data/contact.dart';
 
 class ContactFormScreen extends StatefulWidget {
   const ContactFormScreen({super.key});
@@ -106,7 +106,7 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
     String? orNull(String text) => text.trim().isEmpty ? null : text.trim();
 
     final contact = Contact(
-      id: contactGroupsModel.nextContactId(),
+      id: context.read<ContactGroupsCubit>().nextContactId(),
       firstName: _firstNameController.text.trim(),
       lastName: _lastNameController.text.trim(),
       phone: orNull(_phoneController.text),
